@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Prisma generated client
+apps/api/src/generated/
+
+# CDK
+infra/cdk.out/
+infra/cdk.context.json

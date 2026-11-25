@@ -1,0 +1,7 @@
+{
+  "app": "npx tsx bin/lms.ts",
+  "watch": { "include": ["bin/**", "lib/**"] },
+  "context": {
+    "stage": "dev"
+  }
+}
