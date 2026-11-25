@@ -52,4 +52,22 @@ describe('LmsStack', () => {
       MultiAZ: true,
     });
   });
+
+  it('keeps API errors intact: SPA fallback only on the web behaviour', () => {
+    const dist = template.findResources('AWS::CloudFront::Distribution');
+    const config = Object.values(dist)[0]!.Properties.DistributionConfig;
+    expect(config.CustomErrorResponses).toBeUndefined();
+    expect(config.DefaultCacheBehavior.FunctionAssociations).toHaveLength(1);
+    const api = config.CacheBehaviors.find(
+      (b: { PathPattern: string }) => b.PathPattern === '/api/*',
+    );
+    expect(api.FunctionAssociations).toBeUndefined();
+  });
+
+  it('keeps the original email until a new one is verified', () => {
+    template.hasResourceProperties('AWS::Cognito::UserPool', {
+      AutoVerifiedAttributes: ['email'],
+      UserAttributeUpdateSettings: { AttributesRequireVerificationBeforeUpdate: ['email'] },
+    });
+  });
 });

@@ -2,12 +2,14 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ENV } from '../config/config.module.js';
 import type { Env } from '../config/env.js';
+import { UsersModule } from '../users/users.module.js';
 import { AuthGuard } from './auth.guard.js';
 import { RolesGuard } from './roles.guard.js';
 import { TOKEN_VERIFIER, createTokenVerifier } from './token-verifier.js';
 import { MeController } from './me.controller.js';
 
 @Module({
+  imports: [UsersModule],
   controllers: [MeController],
   providers: [
     { provide: TOKEN_VERIFIER, inject: [ENV], useFactory: (env: Env) => createTokenVerifier(env) },

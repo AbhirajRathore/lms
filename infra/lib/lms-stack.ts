@@ -58,6 +58,9 @@ export class LmsStack extends Stack {
       selfSignUpEnabled: false,
       signInAliases: { email: true },
       standardAttributes: { email: { required: true, mutable: true } },
+      // A changed email only takes effect once verified; until then the old one stays.
+      autoVerify: { email: true },
+      keepOriginal: { email: true },
       passwordPolicy: { minLength: 12, requireSymbols: true },
       accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
       removalPolicy,
@@ -120,11 +123,29 @@ export class LmsStack extends Stack {
       removalPolicy,
       autoDeleteObjects: !isProd,
     });
+    // Single-page app routing: paths without a file extension get index.html. This runs only on
+    // the web behaviour, so API 403/404 responses under /api/* reach the client unchanged
+    // (distribution-wide error responses would rewrite those too).
+    const spaRewrite = new cloudfront.Function(this, 'SpaRewrite', {
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+      code: cloudfront.FunctionCode.fromInline(
+        [
+          'function handler(event) {',
+          '  var request = event.request;',
+          "  if (!/\\.[a-zA-Z0-9]+$/.test(request.uri)) request.uri = '/index.html';",
+          '  return request;',
+          '}',
+        ].join('\n'),
+      ),
+    });
     const distribution = new cloudfront.Distribution(this, 'Web', {
       defaultRootObject: 'index.html',
       defaultBehavior: {
         origin: origins.S3BucketOrigin.withOriginAccessControl(webBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        functionAssociations: [
+          { function: spaRewrite, eventType: cloudfront.FunctionEventType.VIEWER_REQUEST },
+        ],
       },
       additionalBehaviors: {
         // TODO: add a domain + ACM certificate and switch this origin to HTTPS.
@@ -138,12 +159,6 @@ export class LmsStack extends Stack {
           originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
         },
       },
-      // Single-page app: unknown paths fall back to index.html.
-      errorResponses: [403, 404].map((httpStatus) => ({
-        httpStatus,
-        responseHttpStatus: 200,
-        responsePagePath: '/index.html',
-      })),
     });
 
     new CfnOutput(this, 'WebUrl', { value: `https://${distribution.distributionDomainName}` });

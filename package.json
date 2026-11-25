@@ -16,6 +16,7 @@
     "dev:web": "npm run dev -w @lms/web",
     "db:up": "docker compose up -d postgres",
     "db:migrate": "npm run db:migrate -w @lms/api",
+    "db:seed": "npm run db:seed -w @lms/api",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

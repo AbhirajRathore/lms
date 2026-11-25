@@ -1,0 +1,155 @@
+/* Authoring screens (/manage). Builds on the shared classes in src/styles.css. */
+
+.manage h2 {
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.manage h2:focus {
+  outline: none;
+}
+
+.manage p {
+  margin: 0;
+}
+
+.manage-back {
+  font-size: 0.9rem;
+}
+
+.manage-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.field-optional {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* Live region for success messages; kept in the accessibility tree but out of the layout when empty. */
+.manage-status {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.manage-status:empty {
+  position: absolute;
+}
+
+.manage-status-line {
+  gap: 0.75rem;
+}
+
+/* Course table */
+
+.manage-table-wrap {
+  padding: 0;
+  overflow-x: auto;
+}
+
+.manage-courses th:first-child,
+.manage-courses td:first-child {
+  padding-left: 1.25rem;
+}
+
+.manage-courses th:last-child,
+.manage-courses td:last-child {
+  padding-right: 1.25rem;
+}
+
+.manage-courses tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* Row headers hold the course title: undo the column-header styling. */
+.manage-courses tbody th {
+  font-size: inherit;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  color: inherit;
+}
+
+.manage-email {
+  overflow-wrap: anywhere;
+}
+
+/* Lessons */
+
+.manage-lesson-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.manage-lesson-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.manage-lesson-item-editing {
+  display: block;
+  padding: 1rem;
+  background: var(--surface-2);
+}
+
+.manage-lesson-position {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--surface-2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.manage-lesson-main {
+  flex: 1 1 14rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.manage-lesson-title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.manage-lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.manage-lesson-actions {
+  gap: 0.25rem;
+  justify-content: flex-end;
+}
+
+.manage-lesson-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+}
+
+/* Fieldsets only group controls so a pending save can disable them together. */
+.manage-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}

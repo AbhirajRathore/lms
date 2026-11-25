@@ -15,6 +15,21 @@ concurrency:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    services:
+      # API integration tests run against a real database (created and migrated by the tests).
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: lms
+          POSTGRES_PASSWORD: lms
+          POSTGRES_DB: lms
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lms -d lms"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -26,6 +41,8 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+        env:
+          TEST_DATABASE_URL: postgresql://lms:lms@localhost:5432/lms_test
       - run: npm run build
       - name: CDK synth
         working-directory: infra

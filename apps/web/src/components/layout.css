@@ -1,0 +1,112 @@
+/* App shell: sticky header with brand, main navigation and the signed-in user. */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.app-header-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+}
+
+.app-brand {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.app-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.app-nav-link {
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.app-nav-link:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.app-nav-link.active {
+  background: var(--surface-2);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.app-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  min-width: 0;
+  font-size: 0.875rem;
+}
+
+.app-user-identity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.app-user-email {
+  overflow-wrap: anywhere;
+}
+
+.dev-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.dev-switcher label {
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dev-switcher select {
+  width: auto;
+  max-width: 16rem;
+  min-width: 0;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .app-user {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .dev-switcher {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .dev-switcher select {
+    max-width: 100%;
+    flex: 1;
+  }
+}

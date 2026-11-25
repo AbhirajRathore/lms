@@ -15,15 +15,16 @@ describe('dev token verifier', () => {
 
   it('defaults to the learner role', async () => {
     await expect(verifier.verify('a@b.com')).resolves.toEqual({
-      id: 'dev-a@b.com',
+      subject: 'dev-a@b.com',
       email: 'a@b.com',
+      emailVerified: true,
       roles: ['learner'],
     });
   });
 
-  it('keeps only known roles', async () => {
-    const user = await verifier.verify('a@b.com:admin,owner,instructor');
-    expect(user.roles).toEqual(['admin', 'instructor']);
+  it('keeps only known roles, once each', async () => {
+    const identity = await verifier.verify('a@b.com:admin,owner,instructor,admin');
+    expect(identity.roles).toEqual(['admin', 'instructor']);
   });
 
   it('rejects a token without an email', async () => {

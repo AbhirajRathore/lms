@@ -1,0 +1,224 @@
+/* Learner pages: catalogue, course overview and lesson viewer. */
+
+.course-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+}
+
+.course-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.course-card:hover,
+.course-card:focus-within {
+  border-color: var(--primary);
+}
+
+.course-card h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.course-card h2 a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* The title link covers the whole card, so the card is one click target. */
+.course-card h2 a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+}
+
+.course-card-desc {
+  margin: 0;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.course-card-meta {
+  margin: auto 0 0;
+  font-size: 0.875rem;
+}
+
+.learn-breadcrumb {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.learn-title {
+  min-width: 0;
+}
+
+.learn-page h1,
+.learn-description {
+  overflow-wrap: anywhere;
+}
+
+.learn-title h1 .badge {
+  vertical-align: middle;
+}
+
+.learn-description {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.learn-notice {
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--warning);
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.learn-kicker {
+  margin: 0 0 0.25rem;
+  font-size: 0.875rem;
+}
+
+.learn-not-found h1 {
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.lesson-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.lesson-list li + li {
+  border-top: 1px solid var(--border);
+}
+
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.lesson-row:hover {
+  background: var(--surface-2);
+}
+
+.lesson-number {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.lesson-row-title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.lesson-row-meta {
+  flex: none;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.lesson-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.lesson-notes h2 {
+  font-size: 1rem;
+}
+
+.lesson-embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.lesson-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.lesson-video {
+  display: block;
+  width: 100%;
+  max-height: 70vh;
+  background: #000;
+  border-radius: var(--radius);
+}
+
+.lesson-pager {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lesson-pager > :first-child {
+  justify-self: start;
+}
+
+.lesson-pager > :last-child {
+  justify-self: end;
+}
+
+@media (max-width: 520px) {
+  .lesson-row {
+    flex-wrap: wrap;
+  }
+
+  .lesson-row-meta {
+    flex-basis: 100%;
+    padding-left: 2.5rem;
+  }
+
+  .lesson-pager {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lesson-pager > :nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+  }
+}

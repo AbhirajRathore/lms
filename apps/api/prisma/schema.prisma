@@ -17,24 +17,55 @@ enum Role {
 
 model User {
   id         String   @id @default(uuid()) @db.Uuid
-  externalId String   @unique // Cognito "sub"
-  email      String   @unique
+  externalId String   @unique // identity-provider subject ("sub")
+  /// Not unique: identity is externalId. A re-created IdP user (new sub) may reuse an email.
+  email      String
   roles      Role[]   @default([learner])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   coursesCreated Course[]
+
+  @@index([email])
 }
 
 model Course {
-  id          String   @id @default(uuid()) @db.Uuid
+  id          String    @id @default(uuid()) @db.Uuid
   title       String
   description String?
-  published   Boolean  @default(false)
-  createdById String   @db.Uuid
-  createdBy   User     @relation(fields: [createdById], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  createdById String    @db.Uuid
+  createdBy   User      @relation(fields: [createdById], references: [id])
+  lessons     Lesson[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([published])
+  @@index([createdById])
+}
+
+enum LessonType {
+  text
+  video
+  document
+}
+
+model Lesson {
+  id              String     @id @default(uuid()) @db.Uuid
+  courseId        String     @db.Uuid
+  course          Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title           String
+  type            LessonType
+  /// Text lessons: the lesson body (plain text). Video/document lessons: optional notes.
+  body            String?
+  /// Video/document lessons: https URL of the video or document.
+  url             String?
+  durationMinutes Int?
+  /// 0-based order within the course; kept contiguous by the API.
+  position        Int
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@index([courseId, position])
 }
