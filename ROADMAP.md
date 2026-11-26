@@ -31,7 +31,7 @@ What works locally:
   - user identity is the identity provider's subject (stored as `externalId`). Emails are not unique: a user deleted and re-created in the identity provider with the same email gets in as a new LMS user, and rows are never relinked by email (`apps/api/src/users/users.service.ts`);
   - the stored email changes only when the token's email is verified.
 - The web app has a dev-only "Sign in as" switcher with four seeded users, and it is not rendered in production builds.
-- Seed data: 4 dev users, 2 published courses and 1 draft.
+- Seed data: 4 dev users, 3 published courses (one made of embedded videos) and 1 draft.
 - Infrastructure as code (`infra/`): one stack per stage, in a UAE region by default, with:
   - a private network;
   - managed Postgres, encrypted at rest (a standby in a second availability zone, deletion protection and 14-day backups in prod). The API reads the database credentials from the secrets store and connects over TLS;

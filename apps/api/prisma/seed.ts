@@ -1,5 +1,5 @@
 /**
- * Development seed: the dev sign-in users, two published courses and one draft.
+ * Development seed: the dev sign-in users, three published courses and one draft.
  * Run with `npm run db:seed -w @lms/api`. Safe to re-run: rows are matched by natural keys
  * (user externalId; course title + creator; lesson title within its course) and updated in place.
  */
@@ -163,6 +163,65 @@ const COURSES: SeedCourse[] = [
           'If someone is hurt, make the area safe, call a first aider or the emergency services as needed, and do not move a seriously injured person unless they are in immediate danger.',
           'Then report the event using the incident reporting system or your manager as soon as possible, and on the same day. Include what happened, where and when, who was involved, any injuries, and anything that contributed, such as poor lighting or missing equipment. Some serious injuries and dangerous occurrences must be reported to the authorities within a set time, so prompt internal reporting matters.',
           'Reports are used to find and fix causes, not to blame individuals. Honest reporting helps keep everyone safe.',
+        ),
+      },
+    ],
+  },
+  {
+    title: 'Cyber Safety in Five Short Videos',
+    description:
+      'Five one-minute videos from CISA, the US Cybersecurity and Infrastructure Security Agency, on the habits that stop most attacks: strong passwords, multi-factor authentication, spotting phishing and keeping software up to date.',
+    owner: 'instructor2@lms.local',
+    published: true,
+    lessons: [
+      {
+        title: 'Four simple steps to stay safe online',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=LO4IZBf5gC4',
+        durationMinutes: 2,
+        body: text(
+          'An overview of the four habits this course covers. Each one takes a few minutes to set up and blocks a large share of everyday attacks.',
+          'Key points:\n- Use long, unique passwords and a password manager.\n- Turn on multi-factor authentication (MFA).\n- Recognise and report phishing.\n- Keep your software updated.',
+        ),
+      },
+      {
+        title: 'Make strong passwords',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=XXrbut5xRbE',
+        durationMinutes: 2,
+        body: text(
+          'Key points:\n- Long beats complicated: aim for at least 16 characters, for example a few random words.\n- Use a different password for every account, so one leak does not unlock the rest.\n- Let a password manager create and remember them for you.',
+          'At work, never share your password with anyone, including colleagues or someone claiming to be from IT.',
+        ),
+      },
+      {
+        title: 'Turn on multi-factor authentication',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=QWwaidg3AtY',
+        durationMinutes: 2,
+        body: text(
+          'Key points:\n- MFA asks for a second proof that it is really you, such as a code or an app approval.\n- Even if someone steals your password, they still cannot sign in.\n- Turn it on for email, banking and social media first.',
+          'If you get an MFA prompt you did not ask for, do not approve it. Report it to the IT service desk straight away: it usually means someone has your password.',
+        ),
+      },
+      {
+        title: 'Recognise and report phishing',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=sg0kQYvTlnc',
+        durationMinutes: 2,
+        body: text(
+          'Key points:\n- Be suspicious of urgent requests, unexpected attachments and links that ask you to sign in.\n- Check the sender address and hover over links before you click.\n- When in doubt, contact the sender another way you already trust.',
+          'Report suspicious messages using the company reporting process rather than just deleting them. One report can protect everyone who received the same email.',
+        ),
+      },
+      {
+        title: 'Keep your software up to date',
+        type: 'video',
+        url: 'https://www.youtube.com/watch?v=zCcX6aSXcLI',
+        durationMinutes: 2,
+        body: text(
+          'Key points:\n- Updates fix security holes that attackers already know about.\n- Turn on automatic updates for your devices and apps.\n- Restart when asked: many updates only take effect after a restart.',
+          'On company devices, updates are usually managed for you. Do not postpone them for days, and tell the IT service desk if a device has stopped updating.',
         ),
       },
     ],

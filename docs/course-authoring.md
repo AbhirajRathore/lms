@@ -90,5 +90,6 @@ In local development a "Sign in as" switcher (header) picks a seeded user
 
 ## Seed data
 
-`npm run db:seed -w @lms/api` creates the four dev users from `dev-auth.ts`, two published
-courses with lessons and one draft course. Safe to re-run (idempotent).
+`npm run db:seed -w @lms/api` creates the four dev users from `dev-auth.ts`, three published
+courses (two text-based, one made of embedded videos) and one draft course. Safe to re-run
+(idempotent).
